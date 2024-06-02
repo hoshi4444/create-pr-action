@@ -19,4 +19,4 @@
  git push --force --tags >/dev/null 2>&1
  echo "v${major}.${minor}.${patch}"
 
-野村 友規. GitHub CI/CD実践ガイド――持続可能なソフトウェア開発を支えるGitHub Actionsの設計と運用 エンジニア選書 (pp.455-456). 株式会社技術評論社. Kindle 版. 
+# 野村 友規. GitHub CI/CD実践ガイド――持続可能なソフトウェア開発を支えるGitHub Actionsの設計と運用 エンジニア選書 (pp.455-456). 株式会社技術評論社. Kindle 版. 
