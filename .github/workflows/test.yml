@@ -1,0 +1,34 @@
+name: Test action
+on: pull_request
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup         # テストの準備
+        run: date > foo.md
+      - name: Exercise      # テスト対象コードの実行
+        id: exercise
+        uses: ./
+        with:
+          message: Test
+      - name: Verify        # 実行結果の検証
+        run: |
+          set -x
+          test "$(gh pr view "${BRANCH}" --json title --jq .title)" = "Test"
+        env:
+          BRANCH: ${{ steps.exercise.outputs.branch }}
+      - name: Teardown      # テストの後始末
+        if: ${{ always() }}
+        run: |
+          gh pr close "${BRANCH}" || true
+          git push origin "${BRANCH}" --delete || true
+        env:
+          BRANCH: ${{ steps.exercise.outputs.branch }}
+
+野村 友規. GitHub CI/CD実践ガイド――持続可能なソフトウェア開発を支えるGitHub Actionsの設計と運用 エンジニア選書 (pp.447-448). 株式会社技術評論社. Kindle 版. 
